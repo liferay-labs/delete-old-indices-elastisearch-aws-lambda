@@ -54,6 +54,6 @@ public class LambdaHandler
 		return indices;
 	}
 
-	private static final int _DAYS_TO_KEEP = 2;
+	private static final int _DAYS_TO_KEEP = 4;
 
 }
