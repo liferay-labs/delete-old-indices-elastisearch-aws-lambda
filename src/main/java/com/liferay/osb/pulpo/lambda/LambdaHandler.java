@@ -31,11 +31,11 @@ import java.util.regex.Pattern;
 public class LambdaHandler
 	implements RequestHandler<String, Map<String, String>> {
 
-	public static final Pattern FILEBEAT_INDEX_PATTERN = Pattern.compile(
-		"filebeat.*-(\\d{4}.\\d{2}.\\d{2})");
+	public static final Pattern CWL_INDEX_PATTERN = Pattern.compile(
+		"cwl.*-(\\d{4}.\\d{2}.\\d{2})");
 
-	public static final Pattern METRICBEAT_INDEX_PATTERN = Pattern.compile(
-		"metricbeat.*-(\\d{4}.\\d{2}.\\d{2})");
+	public static final Pattern PULPO_CWL_INDEX_PATTERN = Pattern.compile(
+		"pulpo-cwl-engine.*-(\\d{4}.\\d{2}.\\d{2})");
 
 	@Override
 	public Map<String, String> handleRequest(String host, Context context) {
@@ -45,7 +45,7 @@ public class LambdaHandler
 
 		List<String> oldIndices = ElasticSearchAWSUtil.getOldIndices(
 			host,
-			Arrays.asList(FILEBEAT_INDEX_PATTERN, METRICBEAT_INDEX_PATTERN),
+			Arrays.asList(CWL_INDEX_PATTERN, PULPO_CWL_INDEX_PATTERN),
 			_DAYS_TO_KEEP);
 
 		Map<String, String> indices = ElasticSearchAWSUtil.deleteIndices(
@@ -54,6 +54,6 @@ public class LambdaHandler
 		return indices;
 	}
 
-	private static final int _DAYS_TO_KEEP = 4;
+	private static final int _DAYS_TO_KEEP = 7;
 
 }
